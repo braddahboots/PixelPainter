@@ -8,6 +8,6 @@ function changeColor() {
 //pixel will have background color property - default white
 //will have a height and width property
 //addEventListener property ('click', changeColor())
-function pixelFactor() {
+function pixelFactory() {
 
 }

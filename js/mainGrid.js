@@ -1,3 +1,14 @@
+
+var mouseDown = false;
+
+document.body.onmousedown = function () {
+  mouseDown = true;
+};
+
+document.body.onmouseup = function() {
+  mouseDown = false;
+};
+
 //setup blank canvas with changeable pixels
 function pixelPainter(width, height) {
   // width = colums , height = row
@@ -11,11 +22,12 @@ var row;
 var pix;
 var grid = document.createElement('table');
 grid.id = 'grid';
+// grid.onmousedown = "dragColor()";
 
 
 for(var i = 0; i < rows; i++) {
   row = document.createElement('tr');
-  row.className = 'row';
+  row.className = 'row1';
   for(var j = 0; j < cols; j++) {
     pix = pixelFactory();
     row.appendChild(pix);
@@ -27,4 +39,4 @@ document.body.appendChild(grid);
 // debugger;
 console.log("test", document.body.appendChild(grid));
 }
-pixelPainter(10,10);
+pixelPainter(100,100);

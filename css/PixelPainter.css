@@ -1,0 +1,16 @@
+#paletteDiv
+{
+  border: 5px solid black;
+}
+
+#grid
+{
+  border: 2px solid black;
+}
+
+table
+{
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0px;
+}

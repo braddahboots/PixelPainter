@@ -31,12 +31,12 @@ document.body.appendChild(paletteDiv);
 
 // return clicked pixels color store global
 function palettePixelFactory(color) {
-var pixel = document.createElement('td');
-pixel.style.background = color;
-pixel.style.width = '25px';
-pixel.style.height = '25px';
-pixel.addEventListener('click', colorSelector);
-return pixel;
+var pixelColor = document.createElement('td');
+pixelColor.style.background = color;
+pixelColor.style.width = '20px';
+pixelColor.style.height = '20px';
+pixelColor.addEventListener('click', colorSelector);
+return pixelColor;
 }
 
 function colorSelector() {

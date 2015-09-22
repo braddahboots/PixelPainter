@@ -1,3 +1,4 @@
+var pixelPainter = window.pixelPainter || {};
 
 //create a div pixel when invoked
 //pixel will have background color property - default white

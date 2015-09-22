@@ -1,3 +1,4 @@
+var pixelPainter = window.pixelPainter || {};
 
 // Global variable
 var selectedColor = '#000000';

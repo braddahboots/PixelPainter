@@ -1,14 +1,13 @@
 #paletteDiv
 {
   border: 5px solid black;
-  float: left;
 }
 
 #grid
 {
   border: 2px solid black;
   border-spacing: 0px;
-  margin: auto;
+  float: center;
 }
 
 h1
@@ -26,8 +25,6 @@ table
 {
   margin: 2px;
   margin-right: 2px;
-  float: left;
-  position: relative;
 }
 
 #clear
@@ -35,7 +32,6 @@ table
   margin: 2px;
   margin-left: 15px;
   margin-right: 2px;
-  float: left;
 }
 
 

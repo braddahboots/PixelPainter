@@ -1,3 +1,5 @@
+var pixelPainter = window.pixelPainter || {};
+
 //setup blank canvas with changeable pixels
 function pixelPainter(width, height) {
   var rows = height;
@@ -16,10 +18,10 @@ function pixelPainter(width, height) {
       row.appendChild(pix);
     }
     grid.appendChild(row);
-}
+  }
 
 //appends our matrix to the body of HTML
-document.body.appendChild(grid);
+  document.body.appendChild(grid);
 // debugger;
 // console.log("test", document.body.appendChild(grid));
 }

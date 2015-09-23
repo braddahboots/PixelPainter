@@ -1,3 +1,3 @@
 //To access the paintingForFun module
 var pp = paintingForFun();
-pp.init(50,50);
+pp.init(20,20);

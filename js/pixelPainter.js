@@ -43,7 +43,7 @@ function paintingForFun() {
       row.className = 'row1';
       for(var j = 0; j < cols; j++) {
         if(optionArry) {
-        pix = gridPixelMaker(storedArry[counter]);
+        pix = gridPixelMaker(optionArry[counter]);
         counter ++;
         } else {
           pix = gridPixelMaker();
@@ -59,20 +59,32 @@ function paintingForFun() {
   }
 
   //creates each individual pixel object for our grid canvas
-  function gridPixelMaker(color) {
+  function gridPixelMaker(colorIndex) {
     var pixelMake = document.createElement('td');
     pixelMake.className = 'col1';
-    pixelMake.style.background = (color ? color : "#ffffff");
-    pixelMake.style.width = '5px';
-    pixelMake.style.height = '5px';
+    pixelMake.style.background = (colorIndex ? colorArry[colorIndex] : "#ffffff");
+    pixelMake.dataset.index = (colorIndex ? colorIndex : colorArry.indexOf('#FFFFFF'));
+    pixelMake.style.width = '10px';
+    pixelMake.style.height = '10px';
     pixelMake.addEventListener('click',changeColor);
     pixelMake.addEventListener('mouseover', dragColor);
     return pixelMake;
   }
 
+  function rgb2hex(rgb) {
+    rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+
+      return (rgb && rgb.length === 4) ? "#" +
+      ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+      ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+      ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
+  }
+
   //create a change color funtional method
   function changeColor() {
     this.style.background = selectedColor;
+    var hexColor = rgb2hex(this.style.background);
+    this.dataset.index = colorArry.indexOf(hexColor.toUpperCase());
     console.log(this.style.background);
   }
 
@@ -80,6 +92,8 @@ function paintingForFun() {
   function dragColor() {
     if(mouseDown) {
     this.style.background = selectedColor;
+    var hexColor = rgb2hex(this.style.background);
+    this.dataset.index = colorArry.indexOf(hexColor.toUpperCase());
   }
   }
 
@@ -152,10 +166,25 @@ function paintingForFun() {
       colorPic = rowPic[i].childNodes;
       for(var j = 0; j < colorPic.length; j++) {
         colorNode = colorPic[j];
-        storedArry.push(colorNode.style.background);
+        storedArry.push(colorNode.dataset.index);
       }
     }
     console.log(storedArry);
+  }
+
+  function createLoadButton() {
+    var load = document.createElement('button');
+    load.id = 'load';
+    load.innerHTML = 'Load';
+    load.style.background = 'white';
+    load.style.width = '50px';
+    load.style.height = '25px';
+    load.addEventListener('click', LoadPicture);
+    document.body.appendChild(load);
+  }
+
+  function loadPicture() {
+
   }
 
   //creates our clear button and appends it to our html body
@@ -175,7 +204,7 @@ function paintingForFun() {
     document.body.removeChild(document.getElementById('grid'));
     // debugger;
     var newGrid = _gridMaker(rows, cols);
-    console.log('test', newGrid);
+    // console.log('test', newGrid);
   }
 
   //creates our erase button and appends it to our html body
@@ -193,10 +222,10 @@ function paintingForFun() {
   //function set to white color
   function eraseColor() {
     selectedColor = "#ffffff";
-    console.log('testing',selectedColor);
+    // console.log('testing',selectedColor);
   }
 
-  console.log(module);
+  // console.log(module);
   return module;
 
 }

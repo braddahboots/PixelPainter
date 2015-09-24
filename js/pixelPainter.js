@@ -21,11 +21,14 @@ function paintingForFun() {
     //if our mouse is not clicked down = set false
     document.body.onmouseup = function() {
       mouseDown = false;
+
+      //invokes save function to add current state grid array to stateArry of states
+      savePicture();
     };
   }
 
   // Global array that stores an array of colors saved from picture created on grid
-  var storedArry = [];
+  var state = [];
 
   // Global array that stores the state of the grid and correlates with redo and undo
   var stateArry = [];
@@ -148,7 +151,6 @@ function paintingForFun() {
   //selects a color and uses that color to iterate over objects
   function colorSelector() {
     selectedColor = this.style.background;
-    // console.log(selectedColor);
   }
 
   //creates a button to save the picture
@@ -159,8 +161,12 @@ function paintingForFun() {
     save.style.background = 'white';
     save.style.width = '50px';
     save.style.height = '25px';
-    save.addEventListener('click', savePicture);
+    save.addEventListener('click', encode);
     document.body.appendChild(save);
+  }
+
+  function encode() {
+    window.location.hash = state;
   }
 
   //breaks down the grid matrix into a single array with all cells and their current respected color
@@ -174,11 +180,11 @@ function paintingForFun() {
       colorPic = rowPic[i].childNodes;
       for(var j = 0; j < colorPic.length; j++) {
         colorNode = colorPic[j];
-        storedArry.push(colorNode.dataset.index);
+        state.push(colorNode.dataset.index);
       }
     }
-    console.log(storedArry);
-    window.location.hash = storedArry;
+    stateArry.push(state);
+    console.log('testing',stateArry);
   }
 
   //creates our load button so that we can load the hash name url
@@ -196,7 +202,7 @@ function paintingForFun() {
   //when invoke the function will iterate over the array and create a new grid
   function loadPicture() {
     document.body.removeChild(document.getElementById('grid'));
-      var loadArray = storedArry;
+      var loadArray = state;
       var picGrid = _gridMaker(rows, cols, loadArray);
   }
 
@@ -249,6 +255,9 @@ function paintingForFun() {
 
   //stores the most recent version of the grid once the changeColor function is invoked. When invoked it returns the grid that was saved
   function undoRecent() {
+    document.body.removeChild(document.getElementById('grid'));
+    var lastIndex = stateArry[stateArry.length - 1 ];
+    var undoEvent = _gridMaker(rows, cols, lastIndex);
 
   }
 
@@ -266,7 +275,9 @@ function paintingForFun() {
 
   //stores the state of the grid and cells once the undo button is clicked. When invoked it returns the grid that was saved
   function redoRecent() {
-
+    document.body.removeChild(document.getElementById('grid'));
+    var redoGrid = state;
+    var redoEvent = _gridMaker(rows, cols, redoGrid);
   }
 
   // console.log(module);

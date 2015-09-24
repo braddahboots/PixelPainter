@@ -11,7 +11,7 @@ function paintingForFun() {
   function _init(rows, cols) {
     this.paletteGrid = _paletteGrid();
     this.gridMaker = _gridMaker(rows, cols);
-    console.log(this.gridMaker);
+    // console.log(this.gridMaker);
 
     //if our mouse is clicked down - it is true
     document.body.onmousedown = function () {
@@ -27,8 +27,12 @@ function paintingForFun() {
   // Global array that stores an array of colors saved from picture created on grid
   var storedArry = [];
 
+  // Global array that stores the state of the grid and correlates with redo and undo
+  var stateArry = [];
+
   //creates our grid canvas
   function _gridMaker(rows, cols, optionArry) {
+    console.log('testing',optionArry);
     this.rows = rows;
     this.cols = cols;
     var counter = 0;
@@ -71,6 +75,7 @@ function paintingForFun() {
     return pixelMake;
   }
 
+  //takes the rgb we return from the grid and has changes it into hex value
   function rgb2hex(rgb) {
     rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
 
@@ -80,15 +85,15 @@ function paintingForFun() {
       ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
   }
 
-  //create a change color funtional method
+  //create a change color functional method that when invoked changes the color and index of each cell on the grid when clicked
   function changeColor() {
     this.style.background = selectedColor;
     var hexColor = rgb2hex(this.style.background);
     this.dataset.index = colorArry.indexOf(hexColor.toUpperCase());
-    console.log(this.style.background);
+    // console.log(this.style.background);
   }
 
-  //create a mouse over function method
+  //create a mouse over function method that when invoked changes the color and index of each cell when the mouse is dragged over it
   function dragColor() {
     if(mouseDown) {
     this.style.background = selectedColor;
@@ -123,9 +128,12 @@ function paintingForFun() {
     //appends our palette to the body of HTML
     document.body.appendChild(paletteDiv);
 
-    createClearButton();
-    createEraseButton();
     createSaveButton();
+    createLoadButton();
+    createUndoButton();
+    createRedoButton();
+    createEraseButton();
+    createClearButton();
   }
   //creates each individual color object
   function palettePixelMaker(color) {
@@ -140,7 +148,7 @@ function paintingForFun() {
   //selects a color and uses that color to iterate over objects
   function colorSelector() {
     selectedColor = this.style.background;
-    console.log(selectedColor);
+    // console.log(selectedColor);
   }
 
   //creates a button to save the picture
@@ -170,8 +178,10 @@ function paintingForFun() {
       }
     }
     console.log(storedArry);
+    window.location.hash = storedArry;
   }
 
+  //creates our load button so that we can load the hash name url
   function createLoadButton() {
     var load = document.createElement('button');
     load.id = 'load';
@@ -179,12 +189,15 @@ function paintingForFun() {
     load.style.background = 'white';
     load.style.width = '50px';
     load.style.height = '25px';
-    load.addEventListener('click', LoadPicture);
+    load.addEventListener('click', loadPicture);
     document.body.appendChild(load);
   }
 
+  //when invoke the function will iterate over the array and create a new grid
   function loadPicture() {
-
+    document.body.removeChild(document.getElementById('grid'));
+      var loadArray = storedArry;
+      var picGrid = _gridMaker(rows, cols, loadArray);
   }
 
   //creates our clear button and appends it to our html body
@@ -202,12 +215,10 @@ function paintingForFun() {
   //invokes _paletteGrid function
   function clearAll() {
     document.body.removeChild(document.getElementById('grid'));
-    // debugger;
     var newGrid = _gridMaker(rows, cols);
-    // console.log('test', newGrid);
   }
 
-  //creates our erase button and appends it to our html body
+  //creates the erase button and appends it to our html body
   function createEraseButton() {
     var eraser = document.createElement('button');
     eraser.id = 'eraser';
@@ -222,7 +233,40 @@ function paintingForFun() {
   //function set to white color
   function eraseColor() {
     selectedColor = "#ffffff";
-    // console.log('testing',selectedColor);
+  }
+
+  //creates the undo button which saves the last click in a variable and erases the most recent click function
+  function createUndoButton() {
+    var undoBu = document.createElement('button');
+    undoBu.id = 'undo';
+    undoBu.innerHTML = 'Undo';
+    undoBu.style.background = 'white';
+    undoBu.style.width = '50px';
+    undoBu.style.height = '25px';
+    undoBu.addEventListener('click', undoRecent);
+    document.body.appendChild(undoBu);
+  }
+
+  //stores the most recent version of the grid once the changeColor function is invoked. When invoked it returns the grid that was saved
+  function undoRecent() {
+
+  }
+
+  //create the redo button which saves the color index of each cell once the undo button is invoked
+  function createRedoButton() {
+    var redoBu = document.createElement('button');
+    redoBu.id = 'redo';
+    redoBu.innerHTML = 'Redo';
+    redoBu.style.background = 'white';
+    redoBu.style.width = '50px';
+    redoBu.style.height = '25px';
+    redoBu.addEventListener('click', redoRecent);
+    document.body.appendChild(redoBu);
+  }
+
+  //stores the state of the grid and cells once the undo button is clicked. When invoked it returns the grid that was saved
+  function redoRecent() {
+
   }
 
   // console.log(module);

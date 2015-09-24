@@ -1,37 +1,43 @@
 #paletteDiv
 {
   border: 5px solid black;
+  margin-bottom: 10px;
 }
 
 #grid
 {
   border: 2px solid black;
   border-spacing: 0px;
+  margin-top: 10px;
   float: center;
 }
 
 h1
 {
   text-align: center;
+  color: white;
 }
 
 table
 {
   border: none;
   border-collapse: collapse;
+  padding: 10px;
 }
 
-#eraser
+button
 {
   margin: 2px;
-  margin-right: 2px;
+  margin-left: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  -ms-align-self: auto;
+  align-self: auto;
 }
 
-#clear
+body
 {
-  margin: 2px;
-  margin-left: 15px;
-  margin-right: 2px;
+  background-image: url('http://i.kinja-img.com/gawker-media/image/upload/vrurviziykvkse6puo1p.jpg');
 }
 
 
